@@ -69,7 +69,7 @@
       <div class="prose">
         <p>The useful version of this is a sentence like “create a booking for Teni Adeyemi, portraits in Lagos on 20 December, confirm it, and remind me the day before to call her.” That is three writes: a person who was not on the desk yet, a booking, and a reminder tied to that booking. A chat box that only answers does not do any of them. A chat box that writes straight into the database is worse, because one loose sentence can book the wrong person.</p>
         <p>So I split the two jobs. The model can read, it can search the log, and it can hand back one job. The job is a title and an ordered list of steps, and the steps use people’s names, not record ids. He does not talk in ids. A separate executor takes that job, finds the person, and writes through the same path the buttons use. That matters, because then a change from the chat has the same permission check and the same log line as a change he made with his thumb.</p>
-        <p>Each step shows up on a card. Done, waiting, needs a detail, or failed. If a name matches two people, it stops and asks. It does not pick one. If a step needs something he has not said, the card waits. If a step fails, the later steps do not pretend they ran. A finished card stays in the thread, so when he opens it the next day he can see what actually happened, not a reply that says it is done.</p>
+        <p>Each step shows up on a card. Done, waiting, needs a detail, or failed. If a name matches two people, it stops and asks. It does not pick one. If a step needs something he has not said, the card waits. If a step fails, the later steps do not pretend they ran. A finished card stays in the thread, so when he opens it the next day the steps are still there, with what the executor did on each one.</p>
         <p>A delete does not run until he taps yes on that card. The yes goes to the executor. It does not go back through the model, because I do not want the model to be the thing that confirms its own delete. The same job, inside a minute, is not run twice. Refreshing the page does not start a second conversation. The thread is one record on the server: a short summary, then the last twelve turns.</p>
         <p>Questions go to a cheaper model. A change goes to a stronger one. The screen does not show the model name, and it does not show a token count. He does not need either of those to know whether Teni got booked. I also do not send the photo files to the model. They stay in the picker and in PocketBase. The model gets the names.</p>
       </div>
@@ -88,7 +88,7 @@
       </div>
       <figure class="portrait">
         <img src="images/assistant.jpg" width="384" height="528" alt="Assistant card. The request created Teni Adeyemi, made a booking, confirmed it, and set a reminder to call her the day before the Lagos shoot. All four steps are done.">
-        <figcaption>One job, four steps, all done. The person, the booking, the confirmation, and the reminder. The card is the write, not the reply.</figcaption>
+        <figcaption>One job, four steps, all done. The person, the booking, the confirmation, and the reminder. The card shows the actions that have been taken, and those lines come from the executor. It is not the reply to the instructions.</figcaption>
       </figure>
     </section>
 
@@ -140,7 +140,7 @@
       </figure>
       <figure>
         <img src="images/work.jpg" width="1280" height="800" alt="A work story called Night market. The client is Amara Cole, in Lagos, on 2 November 2026.">
-        <figcaption>A work story. It is public because he marked the story public, not because the photos exist.</figcaption>
+        <figcaption>A work story. He marked this one public, so it is on the site.</figcaption>
       </figure>
       <figure>
         <img src="images/bookings.jpg" width="1280" height="800" alt="Unpaid bookings. Jordan Blake owes eighty thousand naira. Amara Cole has paid fifty thousand of one hundred and fifty thousand.">
