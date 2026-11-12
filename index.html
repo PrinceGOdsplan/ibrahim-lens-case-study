@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ibrahim Lens — the desk I built</title>
+  <meta name="description" content="How I built a public site and a private studio desk for a one-person photography business. The model talks. A separate executor writes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500&family=Syne:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#start">Skip to the writing</a>
+  <header class="top">
+    <a class="mark" href="#start">Ibrahim Lens</a>
+    <nav aria-label="Chapters">
+      <a href="#business">The desk</a>
+      <a href="#split">The split</a>
+      <a href="#log">The log</a>
+      <a href="#gallery">The gallery</a>
+      <a href="#phone">The phone</a>
+      <a href="#library">The library</a>
+      <a href="#codebase">The codebase</a>
+    </nav>
+  </header>
+
+  <main id="start" class="wrap">
+    <section class="opening" id="business">
+      <p class="kicker">A case study by <a href="https://github.com/PrinceGOdsplan">PrinceGOdsplan</a></p>
+      <h1>One desk for a one-person studio.</h1>
+      <div class="lede">
+        <p>Ibrahim Lens is a photographer who was running his business in pieces. Inquiries sat in one place, dates in another, balances in a notebook, and the pictures in a folder he had to send by hand. The public site was a thing someone else had to change for him.</p>
+        <p>I built him one desk. It holds who wrote, who is booked, the fee, what has been paid, whose pictures those are, and what the public site says. He does it on his phone. The public pages are the shop window. Studio is the room behind the counter.</p>
+        <p>The live site is <a href="https://ibrahimlens.com.ng">ibrahimlens.com.ng</a>. The screens on this page are a local copy filled with fictional clients and photographs I generated for the demo. Amara Cole and Jordan Blake are not his clients.</p>
+      </div>
+      <div class="links">
+        <a class="solid" href="https://ibrahimlens.com.ng">Live site</a>
+        <a href="https://github.com/PrinceGOdsplan/ibrahim-lens-case-study">This repo</a>
+      </div>
+      <figure>
+        <img src="images/home.png" width="1280" height="800" alt="Public home page. Headline: Portrait, held in quiet light. A brass Book button in the header.">
+        <figcaption>Public home. The Book button is the only brass control on the page.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="split">
+      <h2>The model talks. The executor acts.</h2>
+      <div class="prose">
+        <p>He needed to say “mark Amara paid fifty thousand and send her the portraits” and have the books and the gallery change. A chat box that only answers is a toy on a desk that has to move money and files. A chat box that writes the database itself is worse: one loose sentence can book the wrong person or delete a set.</p>
+        <p>So the model never writes. It reads, it searches the log, and it hands over one job. The job is a title plus an ordered list of steps, and the steps name people, not record ids. A separate executor resolves the names, writes through the same authenticated path the buttons use, and reports each step on a card: done, waiting, needs a detail, or failed. If a name matches two people, it stops and asks. It does not guess.</p>
+        <p>A delete waits for a yes on that card. The yes goes to the executor, not back through the model. The same job, inside a minute, is not run twice. The thread is one conversation: a short summary, then the last twelve turns. Questions go to a cheaper model. A change goes to a stronger one. The screen shows neither the model name nor a token meter.</p>
+        <p>The card is where a step can stop. If a step needs a detail, the card asks and waits. If a step fails, it says failed, and the steps after it do not report themselves as done. He can open the same card tomorrow. The thread is one record on the server. A refresh loads that record. It does not open a second conversation next to the first.</p>
+        <p>Sending the photos to the model would have been shorter. The files stay in the picker and in PocketBase. The model receives the names, never the bytes.</p>
+      </div>
+      <div class="diagram" aria-hidden="true">
+        <div class="split">
+          <div class="box">
+            <strong>Model</strong>
+            <p>Reads. Searches the log. Returns one job: a title and ordered steps that name people.</p>
+          </div>
+          <div class="arrow">one job →</div>
+          <div class="box">
+            <strong>Executor</strong>
+            <p>Resolves the names. Writes. Reports each step on the card. A delete waits for a yes here.</p>
+          </div>
+        </div>
+      </div>
+      <figure class="narrow">
+        <img src="images/assistant.jpg" width="384" height="576" alt="Assistant card. The request was to mark Amara paid fifty thousand naira and send her portraits. Both steps are marked done: amount paid, and a delivery of four portraits.">
+        <figcaption>The card is the proof. Done means the executor wrote it. The reply is not the write.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="log">
+      <h2>The log is written in the same request as the change.</h2>
+      <div class="prose">
+        <p>A desk you cannot reconstruct is a desk you cannot trust. Every change that matters writes a line in the same request: who, which part of the desk, what happened, and the before and after. A payment shows as naira, ₦0 to ₦50,000, not as two raw numbers in a debug table.</p>
+        <p>The line names the actor. He did it. The assistant did it. A client sent the booking. The system noted it. The assistant’s line is the same shape as his, because the executor uses the same write path. If the write fails, the log does not claim it succeeded.</p>
+        <p>The line is written in the request that saved the record. A crash between a save and a later log call cannot leave a payment with no history, or a history of a payment that never landed. The summary is a sentence he can read. When a number changed, the old value and the new one sit under that sentence. The log is not a dump of every field on the row.</p>
+        <p>A second “activity” table would have drifted from the first within a month. One log, written beside the change, is the record he opens on the phone.</p>
+      </div>
+      <figure>
+        <img src="images/log.jpg" width="1280" height="800" alt="Studio log. Three lines: a private gallery opened for Amara Cole, the portrait booking marked part-paid from zero to fifty thousand naira, and Jordan Blake’s booking request for a lookbook in Abuja.">
+        <figcaption>Three lines, three actors. The payment is written as naira.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="gallery">
+      <h2>A delivery is a private gallery, not a public page.</h2>
+      <div class="prose">
+        <p>The pictures he sells are not the pictures on the website. A client gets a link with a token. The page loads only when that token matches a delivery that has not been revoked and has not expired. There is no account to create and no password to remember. The link is the key, and the key dies on a date.</p>
+        <p>On that page the client can download the frames and leave a line of feedback. A line he likes can become a testimonial later. It does not appear on the public site by itself. Publishing a quote is a separate act, done from the desk.</p>
+        <p>The demo gallery is four frames and one link. Download all is the set. Download original is one frame. The clock is the expiry on the record, so when the date passes the same link stops resolving. I do not take the page down by hand. Revoking the delivery from the desk closes it earlier. The page is not in the public menu. You have the link, or you do not.</p>
+        <p>Posting the set to the portfolio would have been one toggle. A paid set and a public set are different decisions, so the delivery never flips the public flag.</p>
+      </div>
+      <figure>
+        <img src="images/delivery.jpg" width="1265" height="1433" alt="Private gallery for Amara Cole. Four frames, a download, a remaining time, and a feedback box.">
+        <figcaption>Amara’s gallery. Download, a clock, and a feedback box. The token is the only way in.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="phone">
+      <h2>Studio is the app. The website is not.</h2>
+      <div class="prose">
+        <p>He answers inquiries between jobs, often standing up, often on a phone. Studio had to be usable there: who needs a reply, who still owes, and what is about to happen. The dashboard is that list. Outstanding on this demo is ₦180,000, Amara’s remaining ₦100,000 plus Jordan’s ₦80,000, both unpaid in the bookings view.</p>
+        <p>Needs you is that short list: a booking waiting on a reply, a balance still open. A year chart would have looked like software and told him nothing on a Tuesday, so the dashboard stays a list. The phone frame is the same dashboard at 390 pixels wide, stacked. There is no second app.</p>
+        <p>The public site stays a site. It has no login and no dashboard. A visitor downloads the pages they came for. Studio is a route he opens when he is signed in, and the PIN, when he sets one, sits in front of that route on a shared phone.</p>
+      </div>
+      <figure class="phone">
+        <img src="images/studio-phone.jpg" width="390" height="844" alt="Studio dashboard on a phone. Needs you: 2. Outstanding: one hundred and eighty thousand naira. Amara Cole still owes one hundred thousand.">
+        <figcaption>The same dashboard at phone width. This is the screen he actually uses.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/dashboard.jpg" width="1280" height="800" alt="Studio dashboard on a wide screen. Two items need attention. Outstanding one hundred and eighty thousand naira.">
+        <figcaption>Wide layout of the same desk. The numbers match the phone.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="library">
+      <h2>One upload. Four places it can go.</h2>
+      <div class="prose">
+        <p>A frame enters once. After that it can sit in the library, go on the portfolio, become the cover of a work story, or go into a private delivery. Four copies on disk would mean four files to replace when he picks a better crop. One file, and a record of where it is allowed to show, means the public site, the story, and the client gallery are views over the same library.</p>
+        <p>The portfolio is a public rule: a frame is on the site when it is marked for the portfolio and it lives in the portfolio room, not in a private pile. A work story is public when he says the story is on the website. The home slideshow points at frames by id. Remove a frame and the slide goes with it. The page copy holds no second list of image URLs.</p>
+        <p>He edits the public words from Studio. A line on the home page, a story taken off the site, a frame moved into the portfolio: those are records, and the site reads them. A caption does not wait on a deploy. A code change still does.</p>
+        <p>The booking form is the public door into the same records. A request creates a person and a booking. It shows up on the desk as unpaid until he sets the fee and the amount paid. Jordan’s lookbook is ₦80,000 and unpaid. Amara’s portraits are ₦150,000 with ₦50,000 in. The contact on the demo is a fake inbox. The live number never appears here.</p>
+      </div>
+      <div class="pair">
+        <figure>
+          <img src="images/library.jpg" width="1280" height="800" alt="Studio library, portfolio room, six placeholder frames.">
+          <figcaption>The library. Six frames, one file each.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/bookings.jpg" width="1280" height="800" alt="Unpaid bookings. Jordan Blake owes eighty thousand naira. Amara Cole has paid fifty thousand of one hundred and fifty thousand.">
+          <figcaption>Unpaid bookings. Fee and amount paid live on the booking.</figcaption>
+        </figure>
+      </div>
+      <div class="pair">
+        <figure>
+          <img src="images/portfolio.jpg" width="1280" height="800" alt="Public portfolio of the same placeholder frames.">
+          <figcaption>The public portfolio is a filter on that library.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/work.jpg" width="1280" height="800" alt="Work story titled Night market. Client Amara Cole, Lagos, 2 November 2026.">
+          <figcaption>A work story. Public because he marked it public.</figcaption>
+        </figure>
+      </div>
+      <figure>
+        <img src="images/booking.jpg" width="1280" height="800" alt="Public booking form. Contact shown is studio@example.com and a reserved phone number.">
+        <figcaption>The booking form. This is how a request becomes a row on the desk.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="codebase">
+      <h2>Two products, one codebase.</h2>
+      <div class="prose">
+        <p>The public site and Studio are route groups in one Vite app. A visitor hits the public routes and never downloads Studio. The delivery page is its own route, gated by the token. Studio sits behind sign-in.</p>
+        <p>They do not share a skin. The public pages are a warm dark, set in Syne and Sora, with brass only on Book. Studio is a light tool desk, with a night option he can turn on. Mixing the two would have made both look like a theme. They are different jobs, so they look like different jobs.</p>
+        <p>I wrote the specs and the task list before I built, so the collections and the screens had names before the components did. Those notes stay with the code. This repo is the write-up.</p>
+        <p>PocketBase holds the accounts, the records, and the files. That is the API and the file store. Public rules decide what a stranger can read. Studio rules decide what a signed-in user can write. The browser talks to PocketBase for those records. A custom API in front of every screen would have been a second product to keep alive. In production the site is a static build, and PocketBase sits behind Caddy. Locally I run both.</p>
+        <p>The stack is React, Vite, TypeScript, Tailwind, PocketBase, Docker, and Caddy. That is the list.</p>
+      </div>
+      <div class="diagram">
+        <svg viewBox="0 0 720 220" role="img" aria-label="A visitor reaches the site and a private gallery. The photographer reaches Studio. All three read and write PocketBase.">
+          <rect x="20" y="24" width="180" height="52" rx="10" fill="#1e1915" stroke="#3c322b"/>
+          <text x="110" y="55" text-anchor="middle">Visitor</text>
+          <rect x="270" y="16" width="180" height="44" rx="10" fill="#1e1915" stroke="#3c322b"/>
+          <text x="360" y="44" text-anchor="middle">Public site</text>
+          <rect x="270" y="78" width="180" height="44" rx="10" fill="#1e1915" stroke="#3c322b"/>
+          <text x="360" y="106" text-anchor="middle">Private gallery</text>
+          <rect x="20" y="150" width="180" height="52" rx="10" fill="#1e1915" stroke="#3c322b"/>
+          <text x="110" y="181" text-anchor="middle">Photographer</text>
+          <rect x="270" y="154" width="180" height="44" rx="10" fill="#1e1915" stroke="#3c322b"/>
+          <text x="360" y="182" text-anchor="middle">Studio</text>
+          <rect x="520" y="78" width="180" height="64" rx="10" fill="#2a2118" stroke="#c6a15b"/>
+          <text x="610" y="115" text-anchor="middle">PocketBase</text>
+          <path d="M200 50 H270" stroke="#c6a15b" fill="none"/>
+          <path d="M200 176 H270" stroke="#c6a15b" fill="none"/>
+          <path d="M450 38 H520 V100" stroke="#c6a15b" fill="none"/>
+          <path d="M450 100 H520" stroke="#c6a15b" fill="none"/>
+          <path d="M450 176 H520 V120" stroke="#c6a15b" fill="none"/>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>The clients and photographs on this page are fictional. Placeholder frames, made for the demo. The application source stays private. The Ibrahim Lens name, the brand, and the live site belong to the studio: <a href="https://ibrahimlens.com.ng">ibrahimlens.com.ng</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
