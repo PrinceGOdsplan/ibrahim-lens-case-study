@@ -8,6 +8,6 @@ The live site is [ibrahimlens.com.ng](https://ibrahimlens.com.ng). The longer wr
 
 React, Vite, TypeScript, Tailwind, PocketBase, Docker, Caddy. The application is not in this repo. The screens use made-up clients and generated photographs.
 
-![Public home](images/home.png)
+![Public home](images/home.jpg)
 
 ![Studio on a phone](images/studio-phone.jpg)

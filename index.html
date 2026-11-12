@@ -32,31 +32,31 @@
     <section class="opening" id="desk">
       <p class="kicker">A case study by <a href="https://github.com/PrinceGOdsplan">PrinceGOdsplan</a></p>
       <h1>I built him a desk he can run from his phone.</h1>
+      <p class="short">One place for who wrote, who is booked, the fee, what has been paid, whose pictures those are, and what the public site says.</p>
       <div class="lede">
         <p>Ibrahim Lens is a photographer, and before this he was running the business out of too many places. Someone would write to him in one app, the date would be written down somewhere else, the fee and what had been paid lived in a notebook, and the photos sat in a folder he had to send by hand. The website was the part he could not touch. If he wanted a new line on the home page, or a photo on the portfolio, he had to wait for someone else to do it.</p>
         <p>What I built is one desk. He opens it on his phone between jobs. From there he can see who wrote, who is booked, what the fee is, what has been paid, whose pictures he is looking at, and what the public site currently says. The public pages are what a client sees when they come to book or look at the work. Studio is where he actually runs the day.</p>
         <p>The live site is <a href="https://ibrahimlens.com.ng">ibrahimlens.com.ng</a>. The screenshots here are not his real clients. I filled a local copy with two made-up people, Amara Cole and Jordan Blake, and I generated the photos. Amara’s portraits are ₦150,000 with ₦50,000 already paid. Jordan’s lookbook is ₦80,000 and still unpaid. The phone number and the email on the demo are fake on purpose, so none of his real contact details are on this page.</p>
       </div>
       <figure>
-        <img src="images/home.png" width="1280" height="800" alt="The public home page, with the headline Portrait, held in quiet light, and a Book button.">
+        <img src="images/home.jpg" width="1280" height="800" alt="The public home page. A portrait in warm light, headline Portrait, held in quiet light, and a Book button.">
         <figcaption>The public home page. Book is the thing I want a visitor to do, so it is the only filled button up there.</figcaption>
       </figure>
     </section>
 
     <section class="chapter" id="phone">
       <h2>He does the work on the phone, so Studio had to work there.</h2>
-      <div class="with-phone">
-        <div class="prose">
+      <p class="short">Same desk, phone width, with a bottom bar: Home, Gallery, Bookings, Clients, and More.</p>
+      <div class="prose">
           <p>He answers people while he is out, usually standing up, usually on his phone. I did not build a second app for that. Studio is the same app at phone width, and the bottom bar is how he moves around it: Home, Gallery, Bookings, Clients, and More. Website, the log, and settings sit under More, because five things on a thumb is enough and seven is a mess.</p>
           <p>Home is the short list, not a yearly chart. Today tells him if he has a shoot. Needs you is the count of things still waiting on him. Outstanding is the naira that has not come in yet. On this demo that is ₦180,000 across the two bookings, Amara’s remaining ₦100,000 and Jordan’s ₦80,000. Under that, the page says who the money is for. Jordan is the one still fully unpaid, so his name is the one sitting in Needs you.</p>
           <p>I kept the tab bar on the screen. That sounds small until you use it on a phone and the bar jumps, or the keyboard covers it, or a label gets clipped. He misses the tap, and then the desk feels broken. The bar is part of the layout, not something I paint on top and hope stays put. He can also add Studio to his home screen, so it opens like an app instead of a tab he has to go find.</p>
           <p>The public site does not have any of this. A visitor does not get a login, and they do not download the desk. If he sets a PIN, it sits in front of Studio on a shared phone. The website stays a website.</p>
         </div>
-        <figure>
+        <figure class="portrait">
           <img src="images/studio-phone.jpg" width="390" height="844" alt="Studio dashboard on a phone, with the bottom bar: Home, Gallery, Bookings, Clients, and More. Outstanding is one hundred and eighty thousand naira.">
           <figcaption>Home on the phone, with the bottom bar. This is the screen he actually uses.</figcaption>
         </figure>
-      </div>
       <figure>
         <img src="images/dashboard.jpg" width="1280" height="800" alt="The same Studio dashboard on a wide screen. Needs you is 2. Outstanding is one hundred and eighty thousand naira.">
         <figcaption>The same Home on a wide screen. The numbers match the phone. The rail on the left is just the bottom bar with more room.</figcaption>
@@ -65,12 +65,13 @@
 
     <section class="chapter" id="split">
       <h2>The assistant can talk. It cannot write by itself.</h2>
+      <p class="short">He can ask for a new client by name, a confirmed booking, and a reminder, and the card shows each of those done.</p>
       <div class="prose">
-        <p>The useful version of this, for him, is being able to say “mark Amara paid ₦50,000 and send her the portraits” and have the booking and the gallery actually change. A chat box that only answers does not help him finish the day. A chat box that writes straight into the database is worse, because one loose sentence can book the wrong person or delete a set of photos.</p>
+        <p>The useful version of this is a sentence like “create a booking for Teni Adeyemi, portraits in Lagos on 20 December, confirm it, and remind me the day before to call her.” That is three writes: a person who was not on the desk yet, a booking, and a reminder tied to that booking. A chat box that only answers does not do any of them. A chat box that writes straight into the database is worse, because one loose sentence can book the wrong person.</p>
         <p>So I split the two jobs. The model can read, it can search the log, and it can hand back one job. The job is a title and an ordered list of steps, and the steps use people’s names, not record ids. He does not talk in ids. A separate executor takes that job, finds the person, and writes through the same path the buttons use. That matters, because then a change from the chat has the same permission check and the same log line as a change he made with his thumb.</p>
         <p>Each step shows up on a card. Done, waiting, needs a detail, or failed. If a name matches two people, it stops and asks. It does not pick one. If a step needs something he has not said, the card waits. If a step fails, the later steps do not pretend they ran. A finished card stays in the thread, so when he opens it the next day he can see what actually happened, not a reply that says it is done.</p>
         <p>A delete does not run until he taps yes on that card. The yes goes to the executor. It does not go back through the model, because I do not want the model to be the thing that confirms its own delete. The same job, inside a minute, is not run twice. Refreshing the page does not start a second conversation. The thread is one record on the server: a short summary, then the last twelve turns.</p>
-        <p>Questions go to a cheaper model. A change goes to a stronger one. The screen does not show the model name, and it does not show a token count. He does not need either of those to know whether Amara got marked paid. I also do not send the photo files to the model. They stay in the picker and in PocketBase. The model gets the names.</p>
+        <p>Questions go to a cheaper model. A change goes to a stronger one. The screen does not show the model name, and it does not show a token count. He does not need either of those to know whether Teni got booked. I also do not send the photo files to the model. They stay in the picker and in PocketBase. The model gets the names.</p>
       </div>
       <div class="diagram" aria-hidden="true">
         <div class="split">
@@ -85,14 +86,15 @@
           </div>
         </div>
       </div>
-      <figure>
-        <img src="images/assistant.jpg" width="384" height="576" alt="The assistant card for marking Amara paid fifty thousand naira and sending four portraits. Both steps are done.">
-        <figcaption>The card after the job. Both steps are done: the amount paid, and a delivery of four portraits. The reply is not the write. The card is.</figcaption>
+      <figure class="portrait">
+        <img src="images/assistant.jpg" width="384" height="528" alt="Assistant card. The request created Teni Adeyemi, made a booking, confirmed it, and set a reminder to call her the day before the Lagos shoot. All four steps are done.">
+        <figcaption>One job, four steps, all done. The person, the booking, the confirmation, and the reminder. The card is the write, not the reply.</figcaption>
       </figure>
     </section>
 
     <section class="chapter" id="log">
       <h2>If the money changed, the log changed in the same request.</h2>
+      <p class="short">The save and the log line go together, and a payment reads as naira, not as two raw numbers.</p>
       <div class="prose">
         <p>A desk he cannot look back on is not much use when a client says they already paid. Every change that matters writes a line in the same request as the save. If the save fails, the log does not say it worked. If the process dies between the two, I do not want a payment with no history, or a history of a payment that never landed, so they go together.</p>
         <p>The line is a sentence he can read, and it says who did it. Him, the assistant, the client, or the system. The assistant’s line looks like his, because the executor uses the same write. Under the sentence, when a number changed, is the old value and the new one. A payment shows as naira, ₦0 to ₦50,000, because that is how he thinks about a booking. I did not dump every field on the row into the log. He would not read that on a phone.</p>
@@ -106,6 +108,7 @@
 
     <section class="chapter" id="gallery">
       <h2>A delivery is a private link, not a page on the site.</h2>
+      <p class="short">The client gets a link that expires. It is not on the public menu, and it does not put the photos on the portfolio.</p>
       <div class="prose">
         <p>The pictures he sells are not the pictures on the website. After a job he sends the client a link. The page only opens if that token matches a delivery that has not been revoked and has not expired. The client does not make an account, and they do not get a password. The link is the way in, and it stops working on a date.</p>
         <p>On the page they can download the set, or download one original, and they can leave a line about how it felt. If he likes that line, he can turn it into a testimonial later, from the desk. It does not appear on the public site by itself. Publishing a quote is a separate thing he chooses to do.</p>
@@ -120,6 +123,7 @@
 
     <section class="chapter" id="library">
       <h2>A photo is uploaded once. Then he decides where it shows.</h2>
+      <p class="short">One file can sit in the library, go on the portfolio, cover a work story, or go into a private delivery.</p>
       <div class="prose">
         <p>A frame comes in once. After that it can sit in the library, go on the portfolio, become the cover of a work story, or go into a private delivery. If I had stored four copies, a better crop would mean replacing four files and hoping he remembered all of them. One file, and a record of where it is allowed to show, means the public site, the story, and the client gallery are just different views of the same library.</p>
         <p>The portfolio is a rule, not a second upload. A frame is on the site when he marks it for the portfolio and it lives in the portfolio room, not in a private pile. A work story is public when he says that story is on the website. The home slideshow points at the frame by id. If he removes the frame, the slide goes with it. I did not keep a separate list of image URLs in the page copy, because that list would go stale the first time he deleted something.</p>
@@ -150,6 +154,7 @@
 
     <section class="chapter" id="codebase">
       <h2>One app, two jobs, and I wrote the plan before the screens.</h2>
+      <p class="short">The public site and Studio are routes in one app. A visitor never downloads the desk.</p>
       <div class="prose">
         <p>The public site and Studio are route groups in one Vite app. A visitor hits the public routes and never downloads Studio. The delivery page is its own route, and it checks the token before it shows anything. Studio sits behind sign-in. I kept them in one codebase because they share the records. Splitting them into two projects would have meant two deploys every time a booking field changed.</p>
         <p>They do not look the same, and I did not want them to. The public pages are a dark photo site. The type is for the pictures, and the filled button is Book. Studio is a light desk, with a night option he can turn on if he wants it. If I had used one skin for both, the bookings table would have looked like a poster, or the portfolio would have looked like a form. They are different jobs.</p>
